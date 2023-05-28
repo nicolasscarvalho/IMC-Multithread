@@ -44,11 +44,11 @@ class App():
 
         print("{:^16s} {:^18s} {:^18s} {:^18s} {:^16s}".format("Altura (m):", "Peso (Kg):", "Sexo (M/F):", "Nvl de Ativ:", "Idade :"))
         
-        userData = input("").split(" ")
+        user_data = input("").split(" ")
 
         App.row()
 
-        return userData
+        return user_data
 
     @classmethod
     def list_user_data(cls, values):
@@ -66,7 +66,7 @@ class App():
         while True:
             try:
                 list = App.list_user_data(values)
-                userData = App.generate_dict(list)
+                user_data = App.generate_dict(list)
 
             except IndexError:
                 print('\nPreencha todos os dados para prosseguir!\n'.upper())
