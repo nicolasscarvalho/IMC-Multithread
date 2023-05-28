@@ -1,44 +1,63 @@
 class App():
+
+    """
+    user interface and functionalities for the IMC, TMB and QL
+    """
+
+
+
     def __init__(self):
+
+        # showing the app header 
         App.title("The shape of us! \n")
         print("=> Informe alguns dados para começar: \n")
         App.generate_header()
-        
-        """
-        generate_header
-        row_table
-        collect_user_data
-        list_user_data
-        validate_data
-        generate_dict
-        print_result
-        create_table_imc
-        create_table_qtd_cal
-        """
+    
 
+    # padding generator 
     @classmethod
     def padding(cls):
         print("\n\n")
 
+
+
+
+    # header generator to guide user in entering data
     @classmethod
     def generate_header(cls):
         print("OBS: O Nivel de atividade varia de 1 (Sedentário) a 4 (Muito Ativo) !")
         print("Ex: {:^8s} {:^22s} {:^14s} {:^20s} {:^10s} \n".format("1.70", "70.0", "M", "3", "20"))
 
+
+
+
+    # row of "*" 
     @classmethod
     def row(cls):
         print(f"\n{'*' * 81}\n")
 
+
+
+
+    # row line generator 
     @classmethod
     def row_table(cls):
         print(f"+{'-' * 25}++{'-' * 25}++{'-' * 25}+")
 
+
+
+
+    # title generator 
     @classmethod
     def title(cls, title):
         App.row()
         print('*{:^79s}*'.format(title))
         App.row()
 
+
+
+
+    # collects user data
     @classmethod
     def collect_user_data(cls):
 
@@ -50,6 +69,10 @@ class App():
 
         return user_data
 
+
+
+
+    # turns user data into a list type
     @classmethod
     def list_user_data(cls, values):
         list = []
@@ -61,29 +84,43 @@ class App():
                     list.append(float(i))
         return list
 
+
+
+
+    # validade the user data
     @classmethod
     def validate_data(cls, values):
         while True:
+
+            # tries to turn user data into a dict
             try:
                 list = App.list_user_data(values)
                 user_data = App.generate_dict(list)
 
+            # returns to collect user data if there are insufficient values
             except IndexError:
                 print('\nPreencha todos os dados para prosseguir!\n'.upper())
                 App.generate_header()
                 values = App.collect_user_data()
 
+            # returns to collect user data if there are incorrect value types
             except ValueError:
                 print('\nValor inválido!\n'.upper())
                 App.generate_header()
                 values = App.collect_user_data()
 
+            # keeps user data in a list type
             else:
+                print('\nAlgum erro ocorreu!\n'.upper())
                 list = App.list_user_data(values)
                 break
 
         return list
 
+
+
+
+    # turns a list into a dict
     @classmethod
     def generate_dict(cls, list):
         dic = {'altura': None, 'peso': None, 'sexo': None, 'nvlAtiv': None, 'idade': None}
@@ -95,6 +132,10 @@ class App():
 
         return dic
 
+
+
+
+    # show the calculation result
     @classmethod
     def print_result(cls, list):
         print()
@@ -102,8 +143,11 @@ class App():
         print('|{:^25s}||{:^25s}||{:^25s}|'.format(str(list[0][0]), str(list[0][1]), str(list[0][2])))
         App.row()
 
+
+
+
+    # shows the result for IMC
     @classmethod
-    # (imc, status)
     def create_table_imc(cls, imc, status):
         content = [['Tabela de IMC', 'Intervalo', ' Status'],
                    ['Menos do que: ', '18,5', 'Abaixo do Peso !'],
@@ -114,20 +158,23 @@ class App():
                    ['Mais do que: ', '40,0', 'Obesidade Grau 3!'],
                    ]
 
-        # analysingImc -> status
+        # store the result for user IMC
         result = [['SEU IMC: ', str(imc), status]]
         print()
 
-        
+        # shows the IMC reference table 
         for row_index, row_content in enumerate(content):
             App.row_table()
             print('|{:^25s}||{:^25s}||{:^25s}|'.format( row_content[0], row_content[1], row_content[2]) )
             
-            
+        # prints the result for user values
         App.row_table()
         App.print_result(result)
 
 
+
+
+    # shows de reference table for amount of calories
     @classmethod
     def create_table_qtd_cal(cls, dict):
         content = [
@@ -138,14 +185,19 @@ class App():
 
         for row in range(0, len(content)):
             App.row_table()
-            print('|{:^25}||{:^25}||{:^25}|'.format(str(content[row][0]), str(content[row][1]) + " kcal",
-                                                    str(content[row][2]) + " g"))
+            print('|{:^25}||{:^25}||{:^25}|'.format(str(content[row][0]), str(content[row][1]) + " kcal", str(content[row][2]) + " g"))
             App.row_table()
 
+
+
+
+    # manages the user choices: IMC, TBM, QTD KCAL and QUIT of the app
     @classmethod
     def menu(cls, response):
         while True:
 
+            
+            # get the user choice
             App.padding()
             print("=> Selecione uma opção: \n")
             print('{:^16s}{:^18s}{:^18s}{:^18s}{:2s}'.format("1 - IMC", "2 - TMB", "3 -  QTD KCAL", "4 - SAIR", ""), end="\t")
@@ -155,6 +207,8 @@ class App():
 
 
 
+
+            # if opt == 1, the IMC is calculated and displayed
             if opt == "1":
                 App.title("IMC")
 
@@ -166,6 +220,8 @@ class App():
 
 
 
+
+            # if opt == 2, the TMB is calculated and displayed
             elif opt == "2":
                 App.title("Taxa Metabólica Basal: ")
 
@@ -180,6 +236,8 @@ class App():
 
 
 
+
+            # if opt == 3, the QTD KCAL is calculated and displayed
             elif opt == "3":
 
                 nut = response["nutrientes"]
@@ -197,6 +255,8 @@ class App():
 
 
 
+
+            # if opt == 4, the client side app is closed
             elif opt == "4":
                 print('{:^79s}'.format("Obrigado por usar nosso App !"))
 
@@ -207,5 +267,7 @@ class App():
 
 
 
+
+            # if opt is different from all above, displays a alert for user
             else:
                 print("Erro: Opção Inválida!")
