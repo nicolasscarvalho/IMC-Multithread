@@ -2,14 +2,26 @@ class App():
     def __init__(self):
         App.title("The shape of us! \n")
         print("=> Informe alguns dados para começar: \n")
-        App.generateHeader()
+        App.generate_header()
+        
+        """
+        generate_header
+        row_table
+        collect_user_data
+        list_user_data
+        validate_data
+        generate_dict
+        print_result
+        create_table_imc
+        create_table_qtd_cal
+        """
 
     @classmethod
     def padding(cls):
         print("\n\n")
 
     @classmethod
-    def generateHeader(cls):
+    def generate_header(cls):
         print("OBS: O Nivel de atividade varia de 1 (Sedentário) a 4 (Muito Ativo) !")
         print("Ex: {:^8s} {:^22s} {:^14s} {:^20s} {:^10s} \n".format("1.70", "70.0", "M", "3", "20"))
 
@@ -18,7 +30,7 @@ class App():
         print(f"\n{'*' * 81}\n")
 
     @classmethod
-    def rowTable(cls):
+    def row_table(cls):
         print(f"+{'-' * 25}++{'-' * 25}++{'-' * 25}+")
 
     @classmethod
@@ -28,7 +40,7 @@ class App():
         App.row()
 
     @classmethod
-    def collectUserData(cls):
+    def collect_user_data(cls):
 
         print("{:^16s} {:^18s} {:^18s} {:^18s} {:^16s}".format("Altura (m):", "Peso (Kg):", "Sexo (M/F):", "Nvl de Ativ:", "Idade :"))
         
@@ -39,7 +51,7 @@ class App():
         return userData
 
     @classmethod
-    def listUserData(cls, values):
+    def list_user_data(cls, values):
         list = []
         for i in values:
             if i != "":
@@ -50,30 +62,30 @@ class App():
         return list
 
     @classmethod
-    def validateData(cls, values):
+    def validate_data(cls, values):
         while True:
             try:
-                list = App.listUserData(values)
-                userData = App.generateDict(list)
+                list = App.list_user_data(values)
+                userData = App.generate_dict(list)
 
             except IndexError:
                 print('\nPreencha todos os dados para prosseguir!\n'.upper())
-                App.generateHeader()
-                values = App.collectUserData()
+                App.generate_header()
+                values = App.collect_user_data()
 
             except ValueError:
                 print('\nValor inválido!\n'.upper())
-                App.generateHeader()
-                values = App.collectUserData()
+                App.generate_header()
+                values = App.collect_user_data()
 
             else:
-                list = App.listUserData(values)
+                list = App.list_user_data(values)
                 break
 
         return list
 
     @classmethod
-    def generateDict(cls, list):
+    def generate_dict(cls, list):
         dic = {'altura': None, 'peso': None, 'sexo': None, 'nvlAtiv': None, 'idade': None}
 
         cont = 0
@@ -84,7 +96,7 @@ class App():
         return dic
 
     @classmethod
-    def printresult(cls, list):
+    def print_result(cls, list):
         print()
         App.row()
         print('|{:^25s}||{:^25s}||{:^25s}|'.format(str(list[0][0]), str(list[0][1]), str(list[0][2])))
@@ -92,7 +104,7 @@ class App():
 
     @classmethod
     # (imc, status)
-    def creatTableImc(cls, imc, status):
+    def create_table_imc(cls, imc, status):
         content = [['Tabela de IMC', 'Intervalo', ' Status'],
                    ['Menos do que: ', '18,5', 'Abaixo do Peso !'],
                    ['Entre: ', '18,5 e 24,9', 'Peso Normal!'],
@@ -108,16 +120,16 @@ class App():
 
         
         for row_index, row_content in enumerate(content):
-            App.rowTable()
+            App.row_table()
             print('|{:^25s}||{:^25s}||{:^25s}|'.format( row_content[0], row_content[1], row_content[2]) )
             
             
-        App.rowTable()
-        App.printresult(result)
+        App.row_table()
+        App.print_result(result)
 
 
     @classmethod
-    def creatTableQtdCal(cls, dict):
+    def create_table_qtd_cal(cls, dict):
         content = [
             ["Carboidratos: ", dict["carboidratos"], round(float((dict["carboidratos"])) / 4.0, 2)],
             ["Proteínas: ", dict["proteinas"], round(float((dict["proteinas"])) / 4.0, 2)],
@@ -125,10 +137,10 @@ class App():
         ]
 
         for row in range(0, len(content)):
-            App.rowTable()
+            App.row_table()
             print('|{:^25}||{:^25}||{:^25}|'.format(str(content[row][0]), str(content[row][1]) + " kcal",
                                                     str(content[row][2]) + " g"))
-            App.rowTable()
+            App.row_table()
 
     @classmethod
     def menu(cls, response):
@@ -150,7 +162,7 @@ class App():
                 print("{:^81s}".format("utilizado para saber se o peso está de acordo com a altura de um"))
                 print("{:^81s}".format("indivíduo, o que pode interferir diretamente na sua saúde e qualidade de vida!"))
 
-                App.creatTableImc(response["imc"], response["statusImc"])
+                App.create_table_imc(response["imc"], response["statusImc"])
 
 
 
@@ -164,7 +176,7 @@ class App():
 
                 result = [['RESULTADO :', 'SUA TMB:', str(response['tmb']) + " kcal"]]
                 
-                App.printresult(result)
+                App.print_result(result)
 
 
 
@@ -178,10 +190,10 @@ class App():
                 print("{:^81s}".format("organismo, como respiração, produção de hormônios, e funcionamento do cérebro."))
                 print("\n{:^81s}".format("Você deve consumir aproximadamente: \n"))
 
-                App.creatTableQtdCal(nut)
+                App.create_table_qtd_cal(nut)
 
                 result = [['RESULTADO :', 'SUA QTD DE KCAL:', str(response['cal']) + " kcal"]]
-                App.printresult(result)
+                App.print_result(result)
 
 
 

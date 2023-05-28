@@ -19,11 +19,11 @@ s.connect((host, port))
 clientApp = App()
 
 # collecting user data
-values = clientApp.collectUserData()
+values = clientApp.collect_user_data()
 
 # processing user data
-listData = clientApp.validateData(values)
-finalData = clientApp.generateDict(listData)
+listData = clientApp.validate_data(values)
+finalData = clientApp.generate_dict(listData)
 
 # serialising data
 # pass the data to json
