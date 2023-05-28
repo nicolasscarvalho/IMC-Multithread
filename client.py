@@ -10,7 +10,7 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # IP server
 host = '127.0.0.1'
 # Server PORT
-port = 9999
+port = 8000
 
 # connection to hostname on the port
 s.connect((host, port))

@@ -106,7 +106,7 @@ serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # get a local machine name
 host = '127.0.0.1'
-port = 9999
+port = 8000
 
 # bind to the port
 serverSocket.bind((host, port))
